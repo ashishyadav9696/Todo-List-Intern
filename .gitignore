@@ -1,0 +1,15 @@
+# Dependency directories
+node_modules/
+
+# Local environment configuration keys (CRITICAL - Keeps your Atlas password safe!)
+.env
+.env.local
+
+# Diagnostic logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System configurations
+.DS_Store
+Thumbs.db

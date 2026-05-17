@@ -1,0 +1,208 @@
+{
+	"info": {
+		"_postman_id": "7d953612-4c28-448f-bb76-2e6527bfc91d",
+		"name": "Todo CRUD API Collection",
+		"description": "Exhaustive collection of sample HTTP requests for the AuraTodo full-stack application.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/health",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"health"
+					]
+				},
+				"description": "Checks the system operational status, database link, and runtime stats."
+			},
+			"response": []
+		},
+		{
+			"name": "Create Todo",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Design Glassmorphic Front-End\",\n  \"description\": \"Incorporate linear gradients, glowing floaters, interactive statistics, and fetch integrations.\",\n  \"priority\": \"high\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/todos",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"todos"
+					]
+				},
+				"description": "Inserts a new Todo task with Mongoose validation rules."
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Todos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/todos",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"todos"
+					],
+					"query": [
+						{
+							"key": "priority",
+							"value": "high",
+							"disabled": true,
+							"description": "Filter tasks by priority ('low', 'medium', 'high')"
+						},
+						{
+							"key": "completed",
+							"value": "false",
+							"disabled": true,
+							"description": "Filter tasks by status ('true', 'false')"
+						}
+					]
+				},
+				"description": "Retrieves the list of all todos, sorted by uncompleted first and newest creation date first."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Single Todo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/todos/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"todos",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "66468bb74c6be6b8e3a2468d",
+							"description": "Replace with an active MongoDB Todo ID"
+						}
+					]
+				},
+				"description": "Retrieve details of a single task by its hexadecimal database ID."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Todo",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"completed\": true,\n  \"priority\": \"medium\",\n  \"description\": \"Incorporate linear gradients, glowing shapes, completed animation, and edit modals.\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/todos/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"todos",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "66468bb74c6be6b8e3a2468d",
+							"description": "Replace with an active MongoDB Todo ID"
+						}
+					]
+				},
+				"description": "Modifies properties of a task. Can toggle completion status, modify titles, descriptions, and priorities."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Todo",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/api/todos/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"todos",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "66468bb74c6be6b8e3a2468d",
+							"description": "Replace with an active MongoDB Todo ID"
+						}
+					]
+				},
+				"description": "Removes a Todo permanently from the database."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:5000",
+			"type": "string"
+		}
+	]
+}
