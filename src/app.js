@@ -3,7 +3,9 @@ const cors = require('cors');
 const morgan = require('morgan');
 const path = require('path');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
+const { protect } = require('./middleware/authMiddleware');
 const todoRoutes = require('./routes/todoRoutes');
+const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 
@@ -30,10 +32,13 @@ app.get('/health', (req, res) => {
   });
 });
 
-// 5. Register Todo routes
-app.use('/api/todos', todoRoutes);
+// 5. Register Auth routes (public)
+app.use('/api/auth', authRoutes);
 
-// 6. Global Catch-all error middlewares
+// 6. Register Todo routes (protected with JWT)
+app.use('/api/todos', protect, todoRoutes);
+
+// 7. Global Catch-all error middlewares
 app.use(notFound);
 app.use(errorHandler);
 
