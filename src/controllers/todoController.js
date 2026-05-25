@@ -8,7 +8,7 @@ const Todo = require('../models/Todo');
 const getTodos = async (req, res, next) => {
   try {
     const { priority, completed } = req.query;
-    const filter = {};
+    const filter = { user: req.user.id };
 
     // Filter by priority ('low', 'medium', 'high')
     if (priority) {
@@ -47,6 +47,12 @@ const getTodoById = async (req, res, next) => {
       throw new Error(`Todo not found with id of ${req.params.id}`);
     }
 
+    // Make sure user owns the todo
+    if (todo.user.toString() !== req.user.id) {
+      res.status(401);
+      throw new Error('User not authorized to view this todo');
+    }
+
     res.status(200).json({
       success: true,
       data: todo
@@ -66,6 +72,7 @@ const createTodo = async (req, res, next) => {
     const { title, description, priority, completed } = req.body;
 
     const todo = await Todo.create({
+      user: req.user.id,
       title,
       description,
       priority,
@@ -96,6 +103,12 @@ const updateTodo = async (req, res, next) => {
       throw new Error(`Todo not found with id of ${req.params.id}`);
     }
 
+    // Make sure user owns the todo
+    if (todo.user.toString() !== req.user.id) {
+      res.status(401);
+      throw new Error('User not authorized to update this todo');
+    }
+
     // Update with body, enforce validator recheck
     todo = await Todo.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -124,6 +137,12 @@ const deleteTodo = async (req, res, next) => {
     if (!todo) {
       res.status(404);
       throw new Error(`Todo not found with id of ${req.params.id}`);
+    }
+
+    // Make sure user owns the todo
+    if (todo.user.toString() !== req.user.id) {
+      res.status(401);
+      throw new Error('User not authorized to delete this todo');
     }
 
     await Todo.findByIdAndDelete(req.params.id);
